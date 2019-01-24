@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "sdkVersion": "29.0.0",
+    "name": "BUMDES Apps",
+    "slug": "bumdes-apps",
+    "icon": "src/images/icon2.png",
+    "privacy": "public",
+    "android": {
+       "package": "com.pdam.kertawinangun"
+     }
+  }
+}
