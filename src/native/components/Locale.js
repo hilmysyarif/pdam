@@ -237,7 +237,7 @@ class Locale extends React.Component {
               </Text>
             </CardItem>
           </Card>
-          {(histories.length > 0 || histories) ? (
+          {(Object.keys(histories).length > 0) ? (
             <Card key={histories['id_pelanggan']}>
               <CardItem>
                 <Text>
