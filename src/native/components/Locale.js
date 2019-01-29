@@ -69,7 +69,7 @@ class Locale extends React.Component {
             Firebase.database().ref('/history/meteran/' + Firebase.auth().currentUser.uid  + '/' + this.state.last_history['tahun'] + '/' + (this.state.last_history['bulan'])).once('value').then(function(snapshot) {
               if(snapshot.val()!= null){
                 var pemakaian_bulan_lalu = snapshot.val().jumlah_meteran;
-                var pemakaian_saat_ini = data['jumlah_meteran'];
+                var pemakaian_saat_ini = this.state.jumlah_meteran;
                 var total_pemakaian = pemakaian_saat_ini - pemakaian_bulan_lalu;
                 var total_bayar = 0;
                 if(total_pemakaian > 0){
@@ -90,7 +90,7 @@ class Locale extends React.Component {
 
               }else{
                 var pemakaian_bulan_lalu = null;
-                var pemakaian_saat_ini = data['jumlah_meteran'];
+                var pemakaian_saat_ini = this.state.jumlah_meteran;
                 var total_pemakaian = pemakaian_saat_ini;
                 var total_bayar = 0;
                 if(total_pemakaian > 0){
