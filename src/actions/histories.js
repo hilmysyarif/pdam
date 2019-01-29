@@ -80,6 +80,14 @@ export function getLastHistory() {
                   id: snapshots.key
                 })
               );
+          }else{
+            return resolve(
+              dispatch({
+                type: "LAST_HISTORIES",
+                data: [],
+                id: null
+              })
+            );
           }
 
         })
@@ -102,6 +110,14 @@ export function getLastHistory() {
                   id: snapshots.key
                 })
               );
+          }else{
+            return resolve(
+              dispatch({
+                type: "LAST_HISTORIES",
+                data: [],
+                id: null
+              })
+            );
           }
 
         })

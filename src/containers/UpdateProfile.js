@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { updateProfile } from '../actions/member';
+import { updateProfile} from '../actions/member';
 
 class UpdateProfile extends Component {
   static propTypes = {
     Layout: PropTypes.func.isRequired,
     member: PropTypes.shape({}).isRequired,
     onFormSubmit: PropTypes.func.isRequired,
+    fetchData: PropTypes.func.isRequired,
     isLoading: PropTypes.bool.isRequired,
   };
 
@@ -23,6 +24,7 @@ class UpdateProfile extends Component {
       .then(mes => this.setState({ successMessage: mes, errorMessage: null }))
       .catch((err) => { this.setState({ errorMessage: err, successMessage: null }); throw err; });
   }
+
 
   render = () => {
     const {

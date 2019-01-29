@@ -24,7 +24,6 @@ const RecipeListing = ({
 
   // Error
   if (error) return <Error content={error} />;
-
   return (<Container>
     <Content padder>
 
@@ -53,18 +52,8 @@ const RecipeListing = ({
              {"\n"}
              Total yang harus dibayar :
              {
-               (item.jumlah_meteran >= 1  && item.jumlah_meteran <= 10)
-                ? " Rp. " + item.jumlah_meteran * 300
-                : (item.jumlah_meteran >= 11  && item.jumlah_meteran <= 20)
-                  ? " Rp. " + item.jumlah_meteran * 400
-                  : (item.jumlah_meteran >= 21  && item.jumlah_meteran <= 30)
-                    ? " Rp. " + item.jumlah_meteran * 500
-                    : (item.jumlah_meteran >= 31  && item.jumlah_meteran <= 40)
-                      ? " Rp. " + item.jumlah_meteran * 600
-                      : (item.jumlah_meteran >= 41)
-                        ? " Rp. " + item.jumlah_meteran * 1000
-                        : ""
-               }
+               item.total_bayar
+              }
             </Text>
           </CardItem>
         </Card>

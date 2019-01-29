@@ -24,8 +24,8 @@ export function getBeritas() {
     return ref.on('value', (snapshot) => {
       return dispatch({
         type: 'BERITAS_REPLACE',
-        data: snapshot.val(),
-        key: Object.keys(snapshot.val())[0],
+        data: Object.values(snapshot.val()),
+        key: Object.keys(snapshot.val()),
       });
     });
   });

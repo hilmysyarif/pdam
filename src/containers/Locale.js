@@ -67,7 +67,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   fetchData: getCurrentHistory,
   fetchLastData: getLastHistory,
-  fetchMember: getMemberData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Locale);

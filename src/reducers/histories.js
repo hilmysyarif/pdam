@@ -18,7 +18,8 @@ export default function recipeReducer(state = initialState, action) {
               id_pelanggan: item2.id_pelanggan,
               jumlah_meteran: item2.jumlah_meteran,
               tahun: item2.tahun,
-              uid: item2.uid
+              uid: item2.uid,
+              total_bayar: item2.total_bayar
             });
           });
         });

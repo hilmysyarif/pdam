@@ -9,9 +9,12 @@ export default function recipeReducer(state = initialState, action) {
 
       // Pick out the props I need
       if (action.data) {
-        beritas.push(
-          action.data[action.key],
-        );
+        beritas = action.data.map(item => ({
+          key: action.key,
+          judul: item.judul,
+          content: item.content,
+        }));
+
       }
       return {
         beritas,
