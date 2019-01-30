@@ -14,6 +14,11 @@ export default {
   missingEmail: 'Email is missing',
   missingPassword: 'Password is missing',
   passwordsDontMatch: 'Passwords do not match',
+  missingImage: 'Sorry, you must select meteran photo first',
+  missingBulan: 'Sorry, you must input Bulan form',
+  missingTahun: 'Sorry, you must input Tahun form',
+  missingIdPelanggan: 'Sorry, you must input Id Pelanggan',
+  missingJumlahMeteran: 'Sorry, you must input Meteran saat ini',
 
   // Recipes
   recipe404: 'Recipe not found',

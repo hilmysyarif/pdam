@@ -53,80 +53,95 @@ class Locale extends React.Component {
   _handleImagePicked = async pickerResult => {
     try {
       this.setState({ uploading: true });
-
-      if (!pickerResult.cancelled) {
-        const response = await fetch(pickerResult.uri);
-        const blob = await response.blob();
-        const ref = Firebase.storage().ref().child(this.state.id_pelanggan + '-' + this.state.bulan + '-' + this.state.tahun);
-        await ref.put(blob)
-        .then(snapshot => {
-          return snapshot.ref.getDownloadURL();
-        })
-        .then(downloadURL => {
-            console.log(`Successfully uploaded file and got download link - ${downloadURL}`);
-            this.setState({ foto_meteran: downloadURL});
-
-            Firebase.database().ref('/history/meteran/' + Firebase.auth().currentUser.uid  + '/' + this.state.last_history['tahun'] + '/' + (this.state.last_history['bulan'])).once('value').then(function(snapshot) {
-              if(snapshot.val()!= null){
-                var pemakaian_bulan_lalu = snapshot.val().jumlah_meteran;
-                var pemakaian_saat_ini = this.state.jumlah_meteran;
-                var total_pemakaian = pemakaian_saat_ini - pemakaian_bulan_lalu;
-                var total_bayar = 0;
-                if(total_pemakaian > 0){
-                  if(total_pemakaian >= 1 && total_pemakaian <= 10){
-                    total_bayar = total_pemakaian * 300;
-                  }else if(total_pemakaian >= 11 && total_pemakaian <= 20){
-                    total_bayar = total_pemakaian * 400;
-                  }else if(total_pemakaian >= 21 && total_pemakaian <= 30){
-                    total_bayar = total_pemakaian * 500;
-                  }else if(total_pemakaian >= 31 && total_pemakaian <= 40){
-                    total_bayar = total_pemakaian * 600;
-                  }else if(total_pemakaian >= 41){
-                    total_bayar = total_pemakaian * 1000;
-                  }
-
-                  this.setState({total_bayar: total_bayar});
-                }
-
-              }else{
-                var pemakaian_bulan_lalu = null;
-                var pemakaian_saat_ini = this.state.jumlah_meteran;
-                var total_pemakaian = pemakaian_saat_ini;
-                var total_bayar = 0;
-                if(total_pemakaian > 0){
-                  if(total_pemakaian >= 1 && total_pemakaian <= 10){
-                    total_bayar = total_pemakaian * 300;
-                  }else if(total_pemakaian >= 11 && total_pemakaian <= 20){
-                    total_bayar = total_pemakaian * 400;
-                  }else if(total_pemakaian >= 21 && total_pemakaian <= 30){
-                    total_bayar = total_pemakaian * 500;
-                  }else if(total_pemakaian >= 31 && total_pemakaian <= 40){
-                    total_bayar = total_pemakaian * 600;
-                  }else if(total_pemakaian >= 41){
-                    total_bayar = total_pemakaian * 1000;
-                  }
-
-                  this.setState({total_bayar: total_bayar});
-
-                }
-              }
-            });
-
-            Firebase.database().ref('history/meteran/' + Firebase.auth().currentUser.uid + '/' + this.state.tahun + '/' + this.state.bulan).set({
-                bulan: this.state.bulan,
-                tahun: this.state.tahun,
-                id_pelanggan: this.state.id_pelanggan,
-                jumlah_meteran: this.state.jumlah_meteran,
-                total_bayar: this.state.total_bayar,
-                foto_meteran: this.state.foto_meteran,
-
-            })
-            console.log('berhasil menambahkan data');
-        }).catch((error)=>{
-            alert(error);
-        });
-
+      const jumlah_meteran_saat_ini = this.state.jumlah_meteran;
+      const data = {
+        bulan: this.state.bulan,
+        tahun: this.state.tahun,
+        id_pelanggan: this.state.id_pelanggan,
+        jumlah_meteran: this.state.jumlah_meteran,
+        foto_meteran: this.state.foto_meteran
       }
+        if (!pickerResult.cancelled) {
+          const response = await fetch(pickerResult.uri);
+          const blob = await response.blob();
+          const ref = Firebase.storage().ref().child(this.state.id_pelanggan + '-' + this.state.bulan + '-' + this.state.tahun);
+          await ref.put(blob)
+          .then(snapshot => {
+            return snapshot.ref.getDownloadURL();
+          })
+          .then(downloadURL => {
+              console.log(`Successfully uploaded file and got download link - ${downloadURL}`);
+              this.setState({ foto_meteran: downloadURL});
+              Firebase.database().ref('/history/meteran/' + Firebase.auth().currentUser.uid  + '/' + this.state.last_history['tahun'] + '/' + (this.state.last_history['bulan'])).once('value').then(function(snapshot) {
+                if(snapshot.val()!= null){
+
+                  var pemakaian_bulan_lalu = snapshot.val().jumlah_meteran;
+                  var pemakaian_saat_ini = jumlah_meteran_saat_ini;
+                  var total_pemakaian = pemakaian_saat_ini - pemakaian_bulan_lalu;
+                  var total_bayar = 0;
+                  if(total_pemakaian > 0){
+                    if(total_pemakaian >= 1 && total_pemakaian <= 10){
+                      total_bayar = total_pemakaian * 300;
+                    }else if(total_pemakaian >= 11 && total_pemakaian <= 20){
+                      total_bayar = total_pemakaian * 400;
+                    }else if(total_pemakaian >= 21 && total_pemakaian <= 30){
+                      total_bayar = total_pemakaian * 500;
+                    }else if(total_pemakaian >= 31 && total_pemakaian <= 40){
+                      total_bayar = total_pemakaian * 600;
+                    }else if(total_pemakaian >= 41){
+                      total_bayar = total_pemakaian * 1000;
+                    }
+
+                    Firebase.database().ref('history/meteran/' + Firebase.auth().currentUser.uid + '/' + data["tahun"] + '/' + data["bulan"]).set({
+                        bulan: data['bulan'],
+                        tahun: data['tahun'],
+                        id_pelanggan: data['id_pelanggan'],
+                        jumlah_meteran: data['jumlah_meteran'],
+                        total_bayar: total_bayar,
+                        foto_meteran: data['foto_meteran'],
+
+                    })
+                  }
+
+                }else{
+
+                  var pemakaian_bulan_lalu = null;
+                  var pemakaian_saat_ini = jumlah_meteran_saat_ini;
+                  var total_pemakaian = pemakaian_saat_ini;
+                  var total_bayar = 0;
+                  if(total_pemakaian > 0){
+                    if(total_pemakaian >= 1 && total_pemakaian <= 10){
+                      total_bayar = total_pemakaian * 300;
+                    }else if(total_pemakaian >= 11 && total_pemakaian <= 20){
+                      total_bayar = total_pemakaian * 400;
+                    }else if(total_pemakaian >= 21 && total_pemakaian <= 30){
+                      total_bayar = total_pemakaian * 500;
+                    }else if(total_pemakaian >= 31 && total_pemakaian <= 40){
+                      total_bayar = total_pemakaian * 600;
+                    }else if(total_pemakaian >= 41){
+                      total_bayar = total_pemakaian * 1000;
+                    }
+
+                    Firebase.database().ref('history/meteran/' + Firebase.auth().currentUser.uid + '/' + data["tahun"] + '/' + data["bulan"]).set({
+                        bulan: data['bulan'],
+                        tahun: data['tahun'],
+                        id_pelanggan: data['id_pelanggan'],
+                        jumlah_meteran: data['jumlah_meteran'],
+                        total_bayar: total_bayar,
+                        foto_meteran: data['foto_meteran'],
+
+                    })
+                  }
+                }
+              });
+
+              console.log('berhasil menambahkan data');
+          }).catch((error)=>{
+              alert(error);
+          });
+
+        }
+
     } catch (e) {
       console.log(e);
       alert('Upload failed, sorry :(');
@@ -174,7 +189,7 @@ class Locale extends React.Component {
   }
 
   render() {
-    const { histories, member } = this.props;
+    const { histories, member, error} = this.props;
     return (
       <Container>
         <Content padder>

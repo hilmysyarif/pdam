@@ -15,6 +15,7 @@ class Locale extends Component {
   }
   static defaultProps = {
     match: null,
+    error: null,
   }
 
   componentDidMount = () => {
@@ -50,9 +51,9 @@ class Locale extends Component {
 
 
   render = () => {
-    const { Layout, histories, match, member, last_history } = this.props;
+    const { Layout, histories, match, member, last_history, error } = this.props;
     const id = (match && match.params && match.params.id) ? match.params.id : null;
-    return <Layout histories={histories} historyId={id} member={member} last_history={last_history  ? last_history : ''} />;
+    return <Layout error={error} histories={histories} historyId={id} member={member} last_history={last_history  ? last_history : ''} />;
   }
 }
 
@@ -61,6 +62,7 @@ const mapStateToProps = state => {
     histories: state.histories,
     member: state.member,
     last_history: state.last_history,
+    error: state.error,
   }
 };
 

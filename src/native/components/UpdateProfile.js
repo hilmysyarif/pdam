@@ -132,65 +132,6 @@ class UpdateProfile extends React.Component {
                     <Input stackedLabel onChangeText={v => this.handleChange('alamat', v)} value={alamat} label='Alamat rumah' placeholder='Alamat' />
                 </InputGroup>
             </ListItem>
-            <ListItem>
-              <CheckBox
-                checked={changeEmail}
-                onPress={() => this.handleChange('changeEmail', !changeEmail)}
-              />
-              <Body>
-                <Text>
-                  Change Email
-                </Text>
-              </Body>
-            </ListItem>
-
-            {changeEmail
-              && (
-              <Item stackedLabel>
-                <Label>
-                  Email
-                </Label>
-                <Input
-                  autoCapitalize="none"
-                  value={email}
-                  keyboardType="email-address"
-                  onChangeText={v => this.handleChange('email', v)}
-                />
-              </Item>
-              )
-            }
-
-            <ListItem>
-              <CheckBox
-                checked={changePassword}
-                onPress={() => this.handleChange('changePassword', !changePassword)}
-              />
-              <Body>
-                <Text>
-                  Change Password
-                </Text>
-              </Body>
-            </ListItem>
-
-            {changePassword
-              && (
-              <View padder>
-                <Item stackedLabel>
-                  <Label>
-                    Password
-                  </Label>
-                  <Input secureTextEntry onChangeText={v => this.handleChange('password', v)} />
-                </Item>
-
-                <Item stackedLabel last>
-                  <Label>
-                    Confirm Password
-                  </Label>
-                  <Input secureTextEntry onChangeText={v => this.handleChange('password2', v)} />
-                </Item>
-              </View>
-              )
-            }
 
             <Spacer size={20} />
 
