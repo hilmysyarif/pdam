@@ -11,17 +11,20 @@ export default function recipeReducer(state = initialState, action) {
       // Pick out the props I need
       if (action.data) {
         action.data.map(item => {
-          item[current_year].map(item2 => {
-            histories.push({
-              bulan: item2.bulan,
-              foto_meteran: item2.foto_meteran,
-              id_pelanggan: item2.id_pelanggan,
-              jumlah_meteran: item2.jumlah_meteran,
-              tahun: item2.tahun,
-              uid: item2.uid,
-              total_bayar: item2.total_bayar
+          if(item[current_year] != undefined){
+            item[current_year].map(item2 => {
+              histories.push({
+                bulan: item2.bulan,
+                foto_meteran: item2.foto_meteran,
+                id_pelanggan: item2.id_pelanggan,
+                jumlah_meteran: item2.jumlah_meteran,
+                tahun: item2.tahun,
+                uid: item2.uid,
+                total_bayar: item2.total_bayar
+              });
             });
-          });
+          }
+
         });
       }
       return {
